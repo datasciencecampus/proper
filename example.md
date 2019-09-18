@@ -1,22 +1,3 @@
-
-## Contents
-
-* [propeR functions](#proper-functions)
-	* [otpConnect](#otpconnect)
-	* [importLocationData and importGeojsonData](#importlocationdata-and-importgeojsondata)
-	* [pointToPoint](#pointtopoint)
-	* [pointToPointLoop](#pointtopointloop)
-	* [pointToPointNearest](#pointtopointnearest)
-	* [pointToPointTime](#pointtopointtime)
-	* [isochrone](#isochrone)
-	* [isochroneTime](#isochronetime)
-	* [isochroneMulti](#isochronemulti)
-	* [isochroneMultiIntersect](#isochronemultiintersect)
-	* [isochroneMultiIntersectSensitivity](#isochronemultiintersectsensitivity)
-	* [isochroneMultiIntersectTime](#isochronemultiintersecttime)
-	* [choropleth](#choropleth)
-
-
 ### propeR functions
 
   propeR has the following functions:
