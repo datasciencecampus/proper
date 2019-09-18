@@ -1,6 +1,6 @@
 # propeR manual
 
-<p align="center"><img align="center" src="meta/logo/propeR_logo_v1.png" width="200px"></p>
+<p align="center"><img align="center" src="proper/meta/logo/propeR_logo_v1.png" width="200px"></p>
 
 ## Contents
 
