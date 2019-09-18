@@ -19,7 +19,6 @@
   * [Data prerequisites](#data-prerequisites)
   * [Using R](#using-rstudio)
   * [Using Docker](#using-docker)
-	* [propeR functions](#proper-functions)
 * [FAQ](#faq)  
 * [Acknowledgments](#acknowledgments)  
 * [Contributions and Bug Reports](#contributions-and-bug-reports)  
@@ -92,6 +91,8 @@ docker run datasciencecampus/dsc_proper:1.0
 See [Dockerfile](Dockerfile) for more information and dependencies. Once you have installed propeR using Docker you can now [start using it in Docker.](#using-docker)
 
 ## Running propeR
+
+Function examples are [available here](https://github.com/datasciencecampus/proper/tree/master/example.md)
 
 ### Data prerequisites
 
