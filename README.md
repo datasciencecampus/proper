@@ -11,13 +11,10 @@
 ## Contents
 
 * [Introduction](#introduction)
-
 * [Software Prerequisites](#software-prerequisites)
-
 * [Installing propeR](#installing-proper)
   * [R installation](#r-installation)
   * [Docker installation](#docker-installation)
-
 * [Running propeR](#running-proper)
   * [Data prerequisites](#data-prerequisites)
   * [Using R](#using-rstudio)
@@ -36,13 +33,9 @@
 	  	* [isochroneMultiIntersectSensitivity](#isochronemultiintersectsensitivity)
 	  	* [isochroneMultiIntersectTime](#isochronemultiintersecttime)
 	  	* [choropleth](#choropleth)
-
 * [FAQ](#faq)  
-
 * [Acknowledgments](#acknowledgments)  
-
 * [Contributions and Bug Reports](#contributions-and-bug-reports)  
-
 * [Licence](#licence)  
 
 
@@ -124,7 +117,7 @@ The CSV file must contain headers, the header names can be specified in **`impor
 
 ### Using RStudio
 
-The [README](https://github.com/datasciencecampus/propeR/blob/develop/README.md) will provide a guide on how to install propeR. As with any R package, it can be loaded in an R session using:
+As with any R package, it can be loaded in an R session using:
 
 ```
 #R
@@ -242,7 +235,7 @@ The header walk\_time_mins will become drive\_time_mins or cycle\_time_mins if `
 
 To output a PNG and interactive HTML leaflet map will as shown below, change the parameter `mapOutput` to `T`. For example:
 
-<p align="center"><img align="center" src="meta/images/pointToPoint.png" width="600px"></p>
+<p align="center"><img align="center" src="proper/meta/images/pointToPoint.png" width="600px"></p>
 
 A GeoJSON of the polyline can be saved using the parameter `geojsonOutput = T`.
 
@@ -306,7 +299,7 @@ This function works in the similar way to the [`pointToPoint()`](#pointtopoint) 
 
 Changing `mapOutput` to `T` will save a map for each journey. To save a GIF of the time-series, set `gifOutput` to `T`. For example:
 
-<p align="center"><img align="center" src="meta/images/pointToPointTime.gif" width="600px"></p>
+<p align="center"><img align="center" src="proper/meta/images/pointToPointTime.gif" width="600px"></p>
 
 **Note:** _if left to the default mapZoom tries to set the zoom to the bounding box (`'bb'`) of the origin and destination locations, and the polyline created from the first API call; however, if the first call returns no journey, the map zoom level may not be appropriately set. If this is the case, you may need to manually enter an appropriate mapZoom number (e.g. `mapZoom = 12`)._
 
@@ -334,7 +327,7 @@ A tabular output will show the travel time (in minutes) for each destination by 
 
 A map can also be saved by usingn `mapOutput = T`). For example:
 
-<p align="center"><img align="center" src="meta/images/isochrone.png" width="600px"></p>
+<p align="center"><img align="center" src="proper/meta/images/isochrone.png" width="600px"></p>
 
 To save the polygon as a .GeoJSON file into the output folder, change `geojsonOutput` to `T`.
 
@@ -361,7 +354,7 @@ This function is to [`isochrone()`](#isochrone) what [`pointToPointTime()`](#poi
 
 Changing `mapOutput` to `T` will save a map for each journey. To save a GIF of the time-series, set `gifOutput` to `T`. For example:
 
-<p align="center"><img align="center" src="meta/images/isochroneTime.gif" width="600px"></p>
+<p align="center"><img align="center" src="proper/meta/images/isochroneTime.gif" width="600px"></p>
 
 **Note:** _if left to the default mapZoom tries to set the zoom to the bounding box (`'bb'`) of the origin and destination locations, and the polygon created from the first API call; however, if the first call returns no journey, the map zoom level may not be appropriately set. If this is the case, you may need to manually enter an appropriate mapZoom number (e.g. `mapZoom = 12`)._
 
@@ -386,7 +379,7 @@ This function works similarly to the [`isochrone()`](#isochrone) function; howev
 
 A PNG and interactive HTML map can also be saved in the output directory by changing `mapOutput` to `T`. For example:
 
-<p align="center"><img align="center" src="meta/images/isochroneMulti.png" width="600px"></p>
+<p align="center"><img align="center" src="proper/meta/images/isochroneMulti.png" width="600px"></p>
 
 In addition, the polygons can be saved as a single .GeoJSON file by changing `geojsonOutput` to `T`.
 
