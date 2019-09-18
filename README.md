@@ -89,7 +89,7 @@ See [Dockerfile](Dockerfile) for more information and dependencies. Once you hav
 
 ## Running propeR
 
-Function examples are [available here](https://github.com/datasciencecampus/proper/tree/develop/example.md)
+Function examples are [available in this example.md file](https://github.com/datasciencecampus/proper/tree/develop/example.md).
 
 ### Data prerequisites
 
