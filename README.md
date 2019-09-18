@@ -172,6 +172,13 @@ Error in paste0(otpcon, "/plan") : object 'otpcon' not found
 * [OpenTripPlanner](http://www.opentripplanner.org/)
 * functions `otpConnect()`, `otpTripTime()`, `otpTripDistance()`, `otpIsochrone()` are modified from Marcus Young's repo [here](https://github.com/marcusyoung/opentripplanner/blob/master/Rscripts/otp-api-fn.R)
 
+## Authors / Contributors
+
+#### Data Science Campus - Office for National Statistics
+* [Michael Hodge](https://github.com/mshodge)
+* [Phillip Stubbings](https://github.com/phil8192)
+* [Ioannis Tsalamanis](https://github.com/IoannisTsalamanis)
+
 ## Contributions and Bug Reports
 
 We welcome contributions and bug reports. Please do this on this repo and we will endeavour to review pull requests and fix bugs in a prompt manner.
