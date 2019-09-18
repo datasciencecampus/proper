@@ -1,3 +1,12 @@
+## Loading propeR
+
+Load the package in R using:
+
+```
+#R
+library(propeR)
+```
+
 ### propeR functions
 
   propeR has the following functions:
@@ -241,7 +250,3 @@ A PNG and interactive HTML map can also be saved in the output directory by chan
 
 In addition, the polygons can be saved as a single .GeoJSON file by changing `geojsonOutput` to `T`.
 
-```
-#R
-library(propeR)
-```
