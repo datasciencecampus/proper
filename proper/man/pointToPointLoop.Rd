@@ -14,7 +14,7 @@ pointToPointLoop(output.dir, otpcon, originPoints, originPointsRow = 1,
   distThreshold = F, distMax = 20, estimateCost = F,
   busTicketPrice = 3, busTicketPriceMax = 12,
   trainTicketPriceKm = 0.12, trainTicketPriceMin = 3, infoPrint = T,
-  failSafeSave = 100)
+  geojsonOutput = F, failSafeSave = 100)
 }
 \arguments{
 \item{output.dir}{The directory for the output files}
@@ -66,6 +66,8 @@ pointToPointLoop(output.dir, otpcon, originPoints, originPointsRow = 1,
 \item{trainTicketPriceMin}{Specifiy the minimum cost of a train journey (default is 3 GBP)}
 
 \item{infoPrint}{Specifies whether you want some information printed to the console or not, default is TRUE}
+
+\item{geojsonOutput}{Specifies whether you want to output the polylines as a geojson, defaults to FALSE}
 
 \item{failSafeSave}{Specify the failsafe save number for large datasets, default is 100}
 }
