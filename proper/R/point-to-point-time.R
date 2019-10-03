@@ -585,4 +585,6 @@ pointToPointTime <- function(output.dir,
   if (infoPrint == T){
     cat("Outputs were saved to ", output.dir, "/pointToPointTime-", file_name,"/.\nThanks for using propeR.", sep="")
   }
+  
+  output <- point_to_point_table_overview
 }

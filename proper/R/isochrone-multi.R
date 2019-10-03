@@ -483,4 +483,6 @@ isochroneMulti <- function(output.dir,
   if (infoPrint == T){
     cat("Outputs were saved to ", output.dir, "/isochroneMulti-", file_name,"/.\nThanks for using propeR.", sep="")
   }
+  
+  output <- time_df
 }
