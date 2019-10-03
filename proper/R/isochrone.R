@@ -369,4 +369,6 @@ isochrone <- function(output.dir,
   if (infoPrint == T){
     cat("Outputs were saved to ", output.dir, "/isochrone-", file_name,"/.\nThanks for using propeR.", sep="")
   }
+  
+  output <- destinationPoints
 }

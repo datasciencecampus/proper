@@ -28,6 +28,7 @@
 ##' @param trainTicketPriceKm Specifiy the cost of a train journey per km (default is 0.12 GPB per km)
 ##' @param trainTicketPriceMin Specifiy the minimum cost of a train journey (default is 3 GBP)
 ##' @param infoPrint Specifies whether you want some information printed to the console or not, default is TRUE
+##' @param geojsonOutput Specifies whether you want to output the polylines as a geojson, defaults to FALSE
 ##' @param failSafeSave Specify the failsafe save number for large datasets, default is 100
 ##' @return Saves journey details as comma separated value file to output directory
 ##' @author Michael Hodge
@@ -72,6 +73,7 @@ pointToPointLoop <- function(output.dir,
                              trainTicketPriceKm = 0.12,
                              trainTicketPriceMin = 3,
                              infoPrint = T,
+                             geojsonOutput = F,
                              failSafeSave = 100) {
   
   #########################
@@ -117,6 +119,10 @@ pointToPointLoop <- function(output.dir,
   dir.create(paste0(output.dir, "/pointToPointLoop-", file_name)) 
   dir.create(paste0(output.dir, "/pointToPointLoop-", file_name, "/csv")) 
   
+  if (geojsonOutput == T){
+    dir.create(paste0(output.dir, "/pointToPointLoop-", file_name, "/geojson"))
+  }
+  
   if (infoPrint == T) {
     cat("Now running the propeR pointToPointLoop tool.\n", sep="")
     cat("Parameters chosen:\n", sep="")
@@ -131,6 +137,7 @@ pointToPointLoop <- function(output.dir,
     }
     cat("Return Journey: ", journeyReturn, "\n", sep="")
     cat("Date and Time: ", startDateAndTime, "\n", sep="")
+    cat("Outputs: CSV [TRUE] GeoJSON [", geojsonOutput, "]\n\n", sep="")
   }
   
   ###########################
@@ -302,6 +309,30 @@ pointToPointLoop <- function(output.dir,
               point_to_point_table_overview["no_of_trains"] <- nrow(point_to_point$output_table[point_to_point$output_table$mode == 'RAIL',])
               point_to_point_table_overview["journey_details"] <- jsonlite::toJSON(point_to_point$output_table)
               
+              #########################
+              #### OPTIONAL EXTRAS ####
+              #########################
+              
+              if (geojsonOutput == T) {
+                poly_lines <- point_to_point$poly_lines
+                poly_lines <- sp::spTransform(poly_lines, sp::CRS("+init=epsg:4326"))
+              }
+              
+              if (geojsonOutput == T) {
+                rgdal::writeOGR(
+                  poly_lines,
+                  dsn = paste0(output.dir,
+                               "/pointToPointLoop-", 
+                               file_name,
+                               "/geojson/pointToPointLoop-",
+                               from$name,
+                               "-",
+                               to$name,
+                               ".geoJSON"),
+                  layer = "poly_lines",
+                  driver = "GeoJSON")
+              }
+              
             } else {
               point_to_point_table_overview <- make_blank_df(from, to, modes)
             }
@@ -348,6 +379,31 @@ pointToPointLoop <- function(output.dir,
               point_to_point_table_overview_tmp["no_of_buses"] <- nrow(point_to_point$output_table[point_to_point$output_table$mode == 'BUS',])
               point_to_point_table_overview_tmp["no_of_trains"] <- nrow(point_to_point$output_table[point_to_point$output_table$mode == 'RAIL',])
               point_to_point_table_overview_tmp["journey_details"] <- jsonlite::toJSON(point_to_point$output_table)
+              
+              #########################
+              #### OPTIONAL EXTRAS ####
+              #########################
+              
+              if (geojsonOutput == T) {
+                poly_lines <- point_to_point$poly_lines
+                poly_lines <- sp::spTransform(poly_lines, sp::CRS("+init=epsg:4326"))
+              }
+              
+              if (geojsonOutput == T) {
+                rgdal::writeOGR(
+                  poly_lines,
+                  dsn = paste0(output.dir,
+                               "/pointToPointLoop-", 
+                               file_name,
+                               "/geojson/pointToPointLoop-",
+                               from$name,
+                               "-",
+                               to$name,
+                               ".geoJSON"),
+                  layer = "poly_lines",
+                  driver = "GeoJSON")
+              }
+              
             } else {
               point_to_point_table_overview_tmp <- make_blank_df(from, to, modes)
             }
@@ -405,4 +461,6 @@ pointToPointLoop <- function(output.dir,
   if (infoPrint == T){
     cat("Outputs were saved to ", output.dir, "/pointToPointLoop-", file_name,"/.\nThanks for using propeR.", sep="")
   }
+  
+  output <- point_to_point_table_overview
 }
