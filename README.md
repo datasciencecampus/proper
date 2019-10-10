@@ -42,7 +42,7 @@ The easiest method is to install direct from this GitHub repository using:
 
 ```
 library(devtools)
-install_github("datasciencecampus/propeR")
+install_github("datasciencecampus/propeR/propeR")
 ```
 
 Failing this, you can pull this repository and install locally using:
