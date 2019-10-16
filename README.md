@@ -181,7 +181,7 @@ Error in paste0(otpcon, "/plan") : object 'otpcon' not found
 * [transxchange2gtfs](https://github.com/planarnetwork/transxchange2gtfs)
 * [dtd2mysql](https://github.com/open-track/dtd2mysql)
 * [OpenTripPlanner](http://www.opentripplanner.org/)
-* functions `otpConnect()`, `otpTripTime()`, `otpTripDistance()`, `otpIsochrone()` are modified from Marcus Young's repo [here](https://github.com/marcusyoung/opentripplanner/blob/master/Rscripts/otp-api-fn.R)
+* functions `otpConnect()`, `otpTripTime()`, `otpTripDistance()`, `otpIsochrone()` are modified from Marcus Young's repo [here](https://github.com/marcusyoung/opentripplanner/blob/master/Rscripts/otp-api-fn.R). Permission to use Marcus Young's code can be found here: https://github.com/marcusyoung/opentripplanner/pull/15
 
 ## Authors / Contributors
 
