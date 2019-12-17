@@ -1,5 +1,5 @@
 ---
-title: "A2S Example: ATM accessibility for user specified LSOA in the UK"
+title: "A2S Example: Service accessibility for user specified LSOA in Wales, UK"
 output:
   pdf_document: default
   html_notebook: default
@@ -9,6 +9,7 @@ output:
 
 ```{r message=FALSE, warning=FALSE}
 lsoa_name = 'Cardiff'
+service_type = 'atm' #atm, pub, school, pharmacy etc (https://wiki.openstreetmap.org/wiki/Key:amenity)
 ```
 
 # Setup connection to Open Trip Planner
@@ -32,20 +33,20 @@ dir.create(out_dir, showWarnings = FALSE)
 
 library(osmdata)
 
-atms_overpass <- opq(paste0(lsoa_name," UK")) %>% # Area bounding box
-  add_osm_feature(key = 'amenity', value = "atm", value_exact = FALSE) %>%
+service_overpass <- opq(paste0(lsoa_name," Wales")) %>% # Area bounding box
+  add_osm_feature(key = 'amenity', value = service_type, value_exact = FALSE) %>%
   osmdata_sf()
-atms <- atms_overpass$osm_points
-coords = sf::st_coordinates(atms)
+services <- service_overpass$osm_points
+coords = sf::st_coordinates(services)
 #propeR requires lon, lat columns
-atms['lon'] = coords[,'X']
-atms['lat'] = coords[,'Y']
-atms['lat_lon'] = paste(atms$lat, atms$lon,sep=",")
+services['lon'] = coords[,'X']
+services['lat'] = coords[,'Y']
+services['lat_lon'] = paste(services$lat, services$lon, sep=",")
 
-atms <- atms %>% 
+services <- services %>% 
   dplyr::select(name=osm_id, lat, lon, lat_lon)
 
-row.names(atms) <- atms$name
+row.names(services) <- services$name
 
 ```
 
@@ -99,18 +100,18 @@ row.names(lsoas) <- lsoas$LSOA11CD
 # Clean location data
 
 ```{r message=FALSE, warning=FALSE}
-atms <- locationValidatorIsochrone(output.dir = out_dir,
-                                       otpcon = otpcon, locationPoints = atms)
+services <- locationValidatorIsochrone(output.dir = out_dir,
+                                       otpcon = otpcon, locationPoints = services)
 lsoas <- locationValidatorIsochrone(output.dir = out_dir,
                                        otpcon = otpcon, locationPoints = lsoas)
 ```
 
 
-# Calculate the isochrones around the ATMs
+# Calculate the isochrones around the Services
 
 ```{r message=FALSE, warning=FALSE}
 
-# run propeR using atms as the origins, calculate bands from 5 mins to half an hour in 5 min steps
+# run propeR using services as the origins, calculate bands from 5 mins to half an hour in 5 min steps
 # assume they are walking.
 
 # it can be that the origins are too far from the road network and so it doesn't find a route, the 
@@ -118,7 +119,7 @@ lsoas <- locationValidatorIsochrone(output.dir = out_dir,
 
 filename <- propeR::isochroneMulti(output.dir = out_dir,
                                    otpcon = otpcon,
-                                   originPoints = as.data.frame(atms),
+                                   originPoints = as.data.frame(services),
                                    destinationPoints = as.data.frame(lsoas),
                                    startDateAndTime  = '2018-08-18 12:00:00',
                                    modes = 'WALK',
@@ -137,7 +138,7 @@ filename <- propeR::isochroneMulti(output.dir = out_dir,
 # currently you need to find the prefix of the output file somehow - I've just taken it from the filesystem
 isoc_output <- sf::st_read(paste0(out_dir,"/",filename,"/geojson/", filename,".geoJSON"), quiet=T)
 
-# an isochrone will have been created for each ATM and time step, so union together the set of time steps to get
+# an isochrone will have been created for each Service and time step, so union together the set of time steps to get
 # one, or a multigeom, for each step
 isoc_union <- isoc_output %>% 
   sf::st_buffer(0.0) %>% #helps resolve self intersections
@@ -166,7 +167,7 @@ isoc_union$time_mins = (isoc_union$time / 60)
 bins <- c(0,sort(isoc_union$time_mins))
 pal <- leaflet::colorBin("PuBu", domain = isoc_union$time_mins, bins = bins,reverse = T)
 
-#plot lsoas (for context), time bands, and atm locations
+#plot lsoas (for context), time bands, and Service locations
 leaflet::leaflet(isoc_union) %>%
   leaflet::addScaleBar() %>%
   leaflet::addProviderTiles(providers$CartoDB.Positron) %>%
@@ -183,20 +184,20 @@ leaflet::leaflet(isoc_union) %>%
     fillOpacity = 0.75,
     group = 'isochrones'
   ) %>% 
-  leaflet::addCircleMarkers(lat = atms$lat, 
-                            lng = atms$lon,
+  leaflet::addCircleMarkers(lat = services$lat, 
+                            lng = services$lon,
                             color = 'red',
                             stroke = T, 
                             fill=F,
                             radius = 2, 
                             weight = 1,
                             fillOpacity = 0.8, 
-                            label = 'ATM'
+                            label = service_type
   ) %>%
   leaflet::addLegend(pal = pal, 
                      values = ~time_mins, 
                      opacity = 0.7, 
-                     title = "Time to nearest ATM (mins)",
+                     title = "Time to nearest Service (mins)",
                      position = "bottomright"
   )
 ```
