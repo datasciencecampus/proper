@@ -484,5 +484,5 @@ isochroneMulti <- function(output.dir,
     cat("Outputs were saved to ", output.dir, "/isochroneMulti-", file_name,"/.\nThanks for using propeR.", sep="")
   }
   
-  output <- time_df
+  filename <- paste0("/isochroneMulti-", file_name)
 }
