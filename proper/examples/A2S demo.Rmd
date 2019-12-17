@@ -1,9 +1,15 @@
 ---
-title: "A2S Example: ATM accessibility for Cardiff, UK"
+title: "A2S Example: ATM accessibility for user specified LSOA in the UK"
 output:
   pdf_document: default
   html_notebook: default
 ---
+
+# Specific LSOA area you want to run for
+
+```{r message=FALSE, warning=FALSE}
+lsoa_name = 'Cardiff'
+```
 
 # Setup connection to Open Trip Planner
 
@@ -23,18 +29,12 @@ dir.create(out_dir, showWarnings = FALSE)
 # Read in OpenStreetMap data using Overpass
 
 ```{r message=FALSE, warning=FALSE}
-# load in atm destinations taken from OSM 
-# http://overpass-turbo.eu/
-# <query type="node">
-#  <has-kv k="amenity" v="atm"/>
-#  <bbox-query {{bbox}}/><!--this is auto-completed with the current map view coordinates.-->
-# </query>
-# <print/>
+
 library(osmdata)
 
-atms_overpass <- opq("cardiff wales") %>% # Cardiff bounding box
-    add_osm_feature(key = 'amenity', value = "atm", value_exact = FALSE) %>%
-    osmdata_sf()
+atms_overpass <- opq(paste0(lsoa_name," UK")) %>% # Area bounding box
+  add_osm_feature(key = 'amenity', value = "atm", value_exact = FALSE) %>%
+  osmdata_sf()
 atms <- atms_overpass$osm_points
 coords = sf::st_coordinates(atms)
 #propeR requires lon, lat columns
@@ -54,15 +54,14 @@ row.names(atms) <- atms$name
 ```{r message=FALSE, warning=FALSE}
 # Want lsoas for visualisation, but population weighted centroids for analysis
 #Read in both using the geoportal API
-lsoa_name <- 'Cardiff'
 
 lsoas <- sf::st_read(paste0('https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/LSOA_DEC_2011_EW_BFE/FeatureServer/0/query?where=LSOA11NM%20like%20%27%25',toupper(lsoa_name),'%25%27&outFields=LSOA11CD,LSOA11NM,FID&outSR=4326&f=json'), 
-                    stringsAsFactors=F, 
-                    quiet=T)
+                     stringsAsFactors=F, 
+                     quiet=T)
 
 lsoa_pop_centroids <- sf::st_read(paste0('https://ons-inspire.esriuk.com/arcgis/rest/services/Census_Boundaries/Lower_Super_Output_Areas_December_2011_Centroids/MapServer/0/query?where=UPPER(lsoa11nm)%20like%20%27%25',toupper(lsoa_name),'%25%27&outFields=*&outSR=4326&f=json'),
-                                 stringsAsFactors=F, 
-                                 quiet=T) 
+                                  stringsAsFactors=F, 
+                                  quiet=T) 
 
 # Solves discrepancy amongst column names
 names(lsoa_pop_centroids)[2] <- "LSOA11CD"
@@ -87,15 +86,25 @@ lsoas <- lsoas %>%
 ```{r message=FALSE, warning=FALSE}
 #read in 2017 population estimates from Nomis and add them onto the lsoas
 
-cardiff_pop_nomis = "http://www.nomisweb.co.uk/api/v01/dataset/NM_2010_1.data.csv?geography=1249937166,1249937167,1249937183,1249937188,1249937182,1249937184,1249937185,1249937187,1249937229...1249937232,1249937236,1249937239...1249937241,1249937180,1249937181,1249937186,1249937189,1249937336,1249937340,1249937208,1249937233,1249937234,1249937335,1249937341,1249937190,1249937195,1249937196,1249937228,1249937120,1249937121,1249937126,1249937203,1249937199,1249937204...1249937206,1249937275,1249937280...1249937282,1249937264,1249937265,1249937269,1249937272,1249937162,1249937235,1249937237,1249937238,1249937266...1249937268,1249937271,1249937117...1249937119,1249937207,1249937191...1249937194,1249937253,1249937254,1249937270,1249937273,1249937197,1249937198,1249937200...1249937202,1249937158...1249937160,1249937163,1249937122...1249937125,1249937274,1249937276,1249937278,1249937279,1249937283,1249937161,1249937164,1249937165,1249937277,1249937250...1249937252,1249937255,1249937174...1249937179,1249937209,1249937214...1249937216,1249937145...1249937148,1249937168...1249937173,1249937137...1249937139,1249937141,1249937109...1249937111,1249937113,1249937116,1249937210...1249937213,1249937219,1249937224...1249937227,1249937140,1249937142...1249937144,1249937112,1249937114,1249937115,1249937309,1249937326,1249937328,1249937217,1249937218,1249937220...1249937223,1249937245...1249937248,1249937105...1249937108,1249937087...1249937091,1249937257,1249937258,1249937262,1249937263,1249937256,1249937259...1249937261,1249937127...1249937131,1249937100...1249937104,1249937095,1249937097,1249937098,1249937136,1249937242...1249937244,1249937249,1249937132...1249937135,1249937153...1249937157,1249937093,1249937094,1249937096,1249937099,1249937149...1249937152,1249937327,1249937330...1249937332,1249937334,1249937092,1249937329,1249937333,1249937337...1249937339&date=latest&gender=0&c_age=200&measures=20100&select=geography_code,obs_value"
+population_nomis = paste0("http://www.nomisweb.co.uk/api/v01/dataset/NM_2010_1.data.csv?geography=",paste(lsoas$LSOA11CD, collapse = ","),"&date=latest&gender=0&c_age=200&measures=20100&select=geography_code,obs_value")
 
-cardiff_pop = readr::read_csv(cardiff_pop_nomis, col_names=c('LSOA11CD', 'pop_2017'), col_types = "ci", skip = 1) 
+population = readr::read_csv(population_nomis, col_names=c('LSOA11CD', 'pop_2017'), col_types = "ci", skip = 1) 
 
-lsoas <- lsoas %>% dplyr::left_join( cardiff_pop, by ='LSOA11CD')
+lsoas <- lsoas %>% dplyr::left_join(population, by ='LSOA11CD')
 
-row.names(lsoas) <- lsoas$lsoa11cd
+row.names(lsoas) <- lsoas$LSOA11CD
 
 ```
+
+# Clean location data
+
+```{r message=FALSE, warning=FALSE}
+atms <- locationValidatorIsochrone(output.dir = out_dir,
+                                       otpcon = otpcon, locationPoints = atms)
+lsoas <- locationValidatorIsochrone(output.dir = out_dir,
+                                       otpcon = otpcon, locationPoints = lsoas)
+```
+
 
 # Calculate the isochrones around the ATMs
 
@@ -108,17 +117,17 @@ row.names(lsoas) <- lsoas$lsoa11cd
 # locationvalidator can be used to resolve a location in that case.
 
 filename <- propeR::isochroneMulti(output.dir = out_dir,
-              otpcon = otpcon,
-              originPoints = as.data.frame(atms),
-              destinationPoints = as.data.frame(lsoas),
-              startDateAndTime  = '2018-08-18 12:00:00',
-              modes = 'WALK',
-              isochroneCutOffMax = 30,
-              isochroneCutOffMin = 10,
-              isochroneCutOffStep = 5,
-              mapOutput = F,
-              originMarker = F,
-              geojsonOutput = T)
+                                   otpcon = otpcon,
+                                   originPoints = as.data.frame(atms),
+                                   destinationPoints = as.data.frame(lsoas),
+                                   startDateAndTime  = '2018-08-18 12:00:00',
+                                   modes = 'WALK',
+                                   isochroneCutOffMax = 30,
+                                   isochroneCutOffMin = 10,
+                                   isochroneCutOffStep = 5,
+                                   mapOutput = F,
+                                   originMarker = F,
+                                   geojsonOutput = T)
 ```
 
 # Union the isochrones for individual time bands and difference to get distinct areas
@@ -160,12 +169,12 @@ pal <- leaflet::colorBin("PuBu", domain = isoc_union$time_mins, bins = bins,reve
 #plot lsoas (for context), time bands, and atm locations
 leaflet::leaflet(isoc_union) %>%
   leaflet::addScaleBar() %>%
-  leaflet::addProviderTiles( providers$CartoDB.Positron) %>%
+  leaflet::addProviderTiles(providers$CartoDB.Positron) %>%
   leaflet::addPolygons(data = lsoas, 
-              fill = F, 
-              weight = 1,
-              color = "orange",
-              group="lsoas") %>%
+                       fill = F, 
+                       weight = 1,
+                       color = "orange",
+                       group="lsoas") %>%
   leaflet::addPolygons(
     fillColor = ~pal(time_mins),
     opacity = 1,
@@ -174,18 +183,22 @@ leaflet::leaflet(isoc_union) %>%
     fillOpacity = 0.75,
     group = 'isochrones'
   ) %>% 
-  leaflet::addCircleMarkers(lat=atms$lat, lng=atms$lon,
-                   color = 'red',
-                   stroke = T, fill=F,
-                   radius = 2, weight=1,
-                   fillOpacity = 0.8, label = 'ATM'
-                   ) %>%
+  leaflet::addCircleMarkers(lat = atms$lat, 
+                            lng = atms$lon,
+                            color = 'red',
+                            stroke = T, 
+                            fill=F,
+                            radius = 2, 
+                            weight = 1,
+                            fillOpacity = 0.8, 
+                            label = 'ATM'
+  ) %>%
   leaflet::addLegend(pal = pal, 
-            values = ~time_mins, 
-            opacity = 0.7, 
-            title = "Time to nearest ATM (mins)",
-            position = "bottomright"
-            )
+                     values = ~time_mins, 
+                     opacity = 0.7, 
+                     title = "Time to nearest ATM (mins)",
+                     position = "bottomright"
+  )
 ```
 
 # Calculate accessibility statistics
@@ -205,7 +218,7 @@ pop_coverd <- lsoas %>%
   dplyr::mutate(seg_area = sf::st_area(geometry),
                 prop_area = seg_area / lsoa_area, 
                 prop_pop = as.numeric(prop_area * pop_2017)
-                ) %>%
+  ) %>%
   sf::st_drop_geometry() %>%
   dplyr::group_by(time_mins) %>%
   dplyr::summarise(pop_covered = sum(prop_pop)) %>%
@@ -219,7 +232,7 @@ pop_coverd %>%
   dplyr::mutate(time_mins = as.factor(time_mins)) %>%
   dplyr::bind_rows(tibble(time_mins = "> 30", pop_covered = pop_remaining)) %>%
   dplyr::mutate(pc_pop = formattable::percent(pop_covered / sum(pop_covered), digits=1),
-         pop_covered = formattable::digits(pop_covered,digits = 0)) %>%
+                pop_covered = formattable::digits(pop_covered,digits = 0)) %>%
   formattable::formattable(col.names = c("Time (mins)", "Population", "% Population"))
 ```
 

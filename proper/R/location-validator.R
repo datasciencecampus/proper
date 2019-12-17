@@ -20,16 +20,16 @@
 ##' }
 ##' @export
 locationValidatorIsochrone <- function(output.dir,
-                                otpcon = otpcon,
-                                locationPoints = originPoints,
-                                modes = 'WALK',
-                                cutoff = 20,
-                                infoPrint = T) {
+                                       otpcon = otpcon,
+                                       locationPoints = originPoints,
+                                       modes = 'WALK',
+                                       cutoff = 20,
+                                       infoPrint = T) {
   
   #########################
   #### SETUP VARIABLES ####
   #########################
-
+  
   num.total <- nrow(locationPoints)
   
   file_name <- format(Sys.time(), "%Y_%m_%d_%H_%M_%S")
@@ -69,14 +69,14 @@ locationValidatorIsochrone <- function(output.dir,
   
   check <- function(otpcon, from_origin, start_date, start_time, modes, cutoff){
     isochrone <- propeR::otpIsochrone(
-    otpcon,
-    batch = T,
-    from = from_origin$lat_lon,
-    to = from_origin$lat_lon,
-    modes = modes,
-    cutoff = cutoff,
-    date = start_date,
-    time = start_time
+      otpcon,
+      batch = T,
+      from = from_origin$lat_lon,
+      to = from_origin$lat_lon,
+      modes = modes,
+      cutoff = cutoff,
+      date = start_date,
+      time = start_time
     )
     return(isochrone)
   }
@@ -89,7 +89,7 @@ locationValidatorIsochrone <- function(output.dir,
     isochrone <- check(otpcon, from_origin, start_date, start_time, modes, cutoff)
     
     if (isochrone$status == "ERROR"){
-    
+      
       if (locationPoints$mod[i] > 0){
         locationPoints$lat[i] <- locationPoints$lat[i] + ((runif(1, 0.01, 0.05) * sample(c(-1,1),size=1)) * locationPoints$mod[i])
         locationPoints$lon[i] <- locationPoints$lon[i] + ((runif(1, 0.01, 0.05) * sample(c(-1,1),size=1)) * locationPoints$mod[i])
@@ -101,18 +101,18 @@ locationValidatorIsochrone <- function(output.dir,
       }
       
       from_origin <- locationPoints[i,]
-    
+      
       df <- propeR::nominatimNodeSearch(from_origin$lat, from_origin$lon)
       sp::coordinates(from_origin) <- c("lon","lat")
       sp::coordinates(df) <- c("lon","lat")
       
       g = FNN::get.knnx(sp::coordinates(df), sp::coordinates(from_origin), k = 1)
       pair = g$nn.index
-          
+      
       locationPoints$lat[i] <- df[pair[1,1],]$lat
       locationPoints$lon[i] <- df[pair[1,1],]$lon
       locationPoints$lat_lon[i] <- paste0(locationPoints$lat[i], ",", locationPoints$lon[i])
-    
+      
       locationPoints$mod[i] <- locationPoints$mod[i] + 1
       
       if (!(i %in% calls)){
@@ -142,4 +142,7 @@ locationValidatorIsochrone <- function(output.dir,
   if (infoPrint == T) {
     cat("Outputs saved. Thanks for using propeR.\n")
   }
+  
+  output_df <- locationPoints
+  
 }
