@@ -25,14 +25,14 @@
 otpConnect <-
   function(hostname = 'localhost',
            router = 'default',
+           p = TRUE,
            port = '8080',
            ssl = FALSE)  {
     return (paste0(
       ifelse(ssl, "https://", "http://"),
       hostname,
-      ":",
-      port,
-      "/otp/routers/",
+      ifelse(p, paste0(":",port,'/'),'/'),
+      "otp/routers/",
       router
     ))
   }
