@@ -1,21 +1,11 @@
+## Loading propeR
 
-## Contents
+Load the package in R using:
 
-* [propeR functions](#proper-functions)
-	* [otpConnect](#otpconnect)
-	* [importLocationData and importGeojsonData](#importlocationdata-and-importgeojsondata)
-	* [pointToPoint](#pointtopoint)
-	* [pointToPointLoop](#pointtopointloop)
-	* [pointToPointNearest](#pointtopointnearest)
-	* [pointToPointTime](#pointtopointtime)
-	* [isochrone](#isochrone)
-	* [isochroneTime](#isochronetime)
-	* [isochroneMulti](#isochronemulti)
-	* [isochroneMultiIntersect](#isochronemultiintersect)
-	* [isochroneMultiIntersectSensitivity](#isochronemultiintersectsensitivity)
-	* [isochroneMultiIntersectTime](#isochronemultiintersecttime)
-	* [choropleth](#choropleth)
-
+```
+#R
+library(propeR)
+```
 
 ### propeR functions
 
@@ -260,7 +250,3 @@ A PNG and interactive HTML map can also be saved in the output directory by chan
 
 In addition, the polygons can be saved as a single .GeoJSON file by changing `geojsonOutput` to `T`.
 
-```
-#R
-library(propeR)
-```
