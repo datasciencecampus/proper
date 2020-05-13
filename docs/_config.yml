@@ -1,6 +1,6 @@
 # Site settings
 permalink: /blog/:year/:month/:day/:title.html
-title: propeR
+title: proper
 tagline: An R package to analyse multimodal travel including public transport.
 description: >
   This R package was created to analyse multimodal transport for a number of research projects at the Data Science Campus, Office for National Statistics.
