@@ -5,7 +5,7 @@
   children:
   - type: button
     href: docs/installation.html
-    text: Install propeR
+    text: Install proper
   - type: button
     href: docs/quick_start.html
     text: Getting started
