@@ -62,7 +62,6 @@ The sample data shows an example of data with a latitude, longitude column (reco
 
 <a id="location-validator"> </a>
 
-
 #### locationValidator
 
 ```R
