@@ -6,8 +6,6 @@ permalink: /docs/quick_start.html
 subsections:
   - title: Software prerequisites
     id: software-prerequisites
-  - title: Running propeR
-    id: running-proper
   - title: Data prerequisites
     id: data-prerequisites
   - title: Using RStudio
@@ -31,12 +29,6 @@ subsections:
 * R and your GUI of choice, such as RStudio, OR
 * Docker
 
-<a id="running-proper"> </a>
-
-## Running propeR
-
-Function examples are [available here](https://github.com/datasciencecampus/proper/tree/master/example.md)
-
 <a id="data-prerequisites"> </a>
 
 ### Data prerequisites
@@ -46,7 +38,7 @@ All location data (origin and destination) must be in comma separated (CSV) form
 * A latitude column, where data is in decimal degrees (or a postcode column)
 * A longitude column, where data is in decimal degrees (or a postcode column)
 
-The CSV file must contain headers, the header names can be specified in **`importLocationData()`**.
+The CSV file must contain headers, the header names can be specified in `importLocationData()`.
 
 <a id="using-rstudio"> </a>
 

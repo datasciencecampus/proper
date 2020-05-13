@@ -37,7 +37,7 @@ install("propeR/dir/here")
 
 If neither method above works. Or you wish to make changes to the package. Then you will need to build the package. Building propeR requires devtools and roxygen2:
 
-```
+```R
 # R
 install.packages("devtools")
 install.packages("roxygen2")

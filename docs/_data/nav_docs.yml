@@ -2,7 +2,7 @@
   items:
   - id: installation
   - id: quick_start
-  - if: functions
+  - id: functions
   - id: contributing
 
 # n title:, 1 items: per title:, n id: per items:
