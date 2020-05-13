@@ -1,9 +1,9 @@
 # Site settings
 permalink: /blog/:year/:month/:day/:title.html
-title: pyGrams
-tagline: Extract n-grams from documents and forecast emergence.
+title: propeR
+tagline: An R package to analyse multimodal travel including public transport.
 description: >
-  This python-based app is designed to extract popular or emergent n-grams/terms (words or short phrases) from free text within a large (>1,000) corpus of documents. Example corpora of granted patent document abstracts are included for testing purposes.
+  This R package was created to analyse multimodal transport for a number of research projects at the Data Science Campus, Office for National Statistics.
 logo: /static/logo.svg
 
 # baseurl determines the subpath of your site. For example if you're using an
@@ -11,7 +11,7 @@ logo: /static/logo.svg
 # as "/reponame" but either set to "" or remove it all together if you have
 # a top-level domain URL as it is now set to "" by default as discussed in:
 # http://jekyllrb.com/news/2016/10/06/jekyll-3-3-is-here/
-baseurl: "/pygrams"
+baseurl: "/proper"
 
 # the base hostname & protocol for your site
 # If baseurl is set, then the absolute url for your site would be url/baseurl
@@ -29,7 +29,7 @@ url: "http://datasciencecampus.github.io"
 # https://github.com/blog/2277-what-s-new-in-github-pages-with-jekyll-3-3
 
 # The GitHub repo for your project
-ghrepo: "datasciencecampus/pygrams"
+ghrepo: "datasciencecampus/proper"
 
 # Use these color settings to determine your colour scheme for the site.
 color:

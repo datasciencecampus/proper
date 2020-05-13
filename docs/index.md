@@ -1,6 +1,6 @@
 ---
 layout: home
-title: pygrams
+title: proper
 id: home
 ---
 

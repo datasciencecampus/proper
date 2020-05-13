@@ -1,8 +1,8 @@
 ---
 layout: docs
-docid: "installation"
-title: "Installation"
-permalink: /docs/installation.html
+docid: "functions"
+title: "Functions"
+permalink: /docs/functions.html
 subsections:
   - title: otpConnect
     id: otpconnect

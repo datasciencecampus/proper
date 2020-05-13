@@ -49,7 +49,7 @@ subsections:
 {%- endblock input_group -%}
 
 {% block data_png %}
-![png](/pygrams/static/{{ output.metadata.filenames['image/png'] }})
+![png](/proper/static/{{ output.metadata.filenames['image/png'] }})
 {% endblock data_png %}
 
 {% block markdowncell %}
