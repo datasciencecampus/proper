@@ -4,8 +4,8 @@
 \alias{otpConnect}
 \title{Get OTP connection URL}
 \usage{
-otpConnect(hostname = "localhost", router = "default", port = "8080",
-  ssl = FALSE)
+otpConnect(hostname = "localhost", router = "default", p = TRUE,
+  port = "8080", ssl = FALSE)
 }
 \arguments{
 \item{hostname}{defaults to 'localhost'}
