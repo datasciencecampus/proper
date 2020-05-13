@@ -46,7 +46,7 @@ The CSV file must contain headers, the header names can be specified in `importL
 
 As with any R package, it can be loaded in an R session using:
 
-```
+```R
 #R
 library(propeR)
 ```
@@ -57,15 +57,16 @@ library(propeR)
 
 Alternatively. If you have installed propeR using Docker you can use Docker to run propeR. Put source and destination `.csv` data in a directory, e.g., `/tmp/data/`. Example data files `origin.csv` and `destination.csv` can be found in `propeR/inst/extdata/`, then:
 
-```
+```bash
+#Bash
 docker run -v /tmp/data:/mnt datasciencecampus/dsc_proper:1.0 'otp.host="XXX.XXX.X.X", fun="pointToPoint", src_file="/mnt/origin.csv", dst_file="/mnt/destination.csv", output.dir="/mnt", startDateAndTime="2019-08-02 12:00:00"'
 ```
 
 where `otp.host` is your inet address, which can be found using:
 
-```
+```bash
+#Bash
 /sbin/ifconfig |grep inet |awk '{print $2}'
-
 ```
 
 Output data will be in `tmp/data/`.
