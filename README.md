@@ -1,4 +1,4 @@
-# p r o p e R
+# propeR
 
 **prope** [latin] _verb_
 **Definitions:**
@@ -31,8 +31,8 @@ This R package ([propeR](https://github.com/datasciencecampus/proper)) was creat
 
 ## Software Prerequisites
 
-* [R](https://www.r-project.org/) and your GUI of choice, such as [RStudio](https://www.rstudio.com/), OR
-* [Docker](https://www.docker.com/)
+* R and your GUI of choice, such as RStudio, OR
+* Docker
 
 ## Installing propeR
 
@@ -42,13 +42,13 @@ The easiest method is to install direct from this GitHub repository using:
 
 ```
 library(devtools)
-install_github("datasciencecampus/propeR/propeR")
+install_github("datasciencecampus/access-to-services/propeR")
 ```
 
 Failing this, you can pull this repository and install locally using:
 
 ```
-install("path/to/propeR/dir")
+install("propeR/dir/here")
 ```
 
 #### R building
@@ -64,18 +64,21 @@ install.packages("roxygen2")
 Then:
 
 ```
-build("path/to/propeR/dir")
-install("path/to/propeR/dir")
+build("propeR/dir/here")
+install("propeR/dir/here")
 ```
 
-Once you have installed propeR using RStudio you can now [start using it in RStudio](#using-rstudio).
+Once you have installed propeR using RStudio you can now [start using it in RStudio.](#using-rstudio)
 
 ### Docker installation
 
-For those who want to run propeR through Docker, we have created a Docker image. The propeR R package can be built from the parent directory as follows:
+For convenience we have created a [Docker](https://www.docker.com/) image for
+the [propeR R package](https://github.com/datasciencecampus/access-to-services/tree/develop/propeR).
+
+The propeR R package can be built from the parent directory as follows:
 
 ```
-cd path/to/propeR/dir
+cd to/propeR/dir/
 docker build . --tag=dsc_proper
 ```
 
@@ -85,11 +88,11 @@ Or you can build from the [online docker image](https://hub.docker.com/u/datasci
 docker run datasciencecampus/dsc_proper:1.0
 ```
 
-See [Dockerfile](Dockerfile) for more information and dependencies. Once you have installed propeR using Docker you can now [start using it in Docker](#using-docker).
+See [Dockerfile](Dockerfile) for more information and dependencies. Once you have installed propeR using Docker you can now [start using it in Docker.](#using-docker)
 
 ## Running propeR
 
-Function examples are [available in this example.md file](https://github.com/datasciencecampus/proper/tree/develop/example.md).
+Function examples are [available here](https://github.com/datasciencecampus/proper/tree/master/example.md)
 
 ### Data prerequisites
 
@@ -109,26 +112,12 @@ As with any R package, it can be loaded in an R session using:
 library(propeR)
 ```
 
-Then you can use the functions, such as:
-
-```
-#R
-pointToPoint(
-output.dir="path/to/output/dir", 
-originPoints=originPointsdf, 
-destinationPoints=destinationPointsdf, 
-startDateAndTime="2019-08-02 12:00:00"
-)
-```
-
-Outputs will be saved to `path/to/output/dir`.
-
 ### Using Docker
 
 Alternatively. If you have installed propeR using Docker you can use Docker to run propeR. Put source and destination `.csv` data in a directory, e.g., `/tmp/data/`. Example data files `origin.csv` and `destination.csv` can be found in `propeR/inst/extdata/`, then:
 
 ```
-docker run -v path/to/output/dir:/mnt datasciencecampus/dsc_proper:1.0 'otp.host="XXX.XXX.X.X", fun="pointToPoint", src_file="/mnt/origin.csv", dst_file="/mnt/destination.csv", output.dir="/mnt", startDateAndTime="2019-08-02 12:00:00"'
+docker run -v /tmp/data:/mnt datasciencecampus/dsc_proper:1.0 'otp.host="XXX.XXX.X.X", fun="pointToPoint", src_file="/mnt/origin.csv", dst_file="/mnt/destination.csv", output.dir="/mnt", startDateAndTime="2019-08-02 12:00:00"'
 ```
 
 where `otp.host` is your inet address, which can be found using:
@@ -138,7 +127,7 @@ where `otp.host` is your inet address, which can be found using:
 
 ```
 
-Output data will be in `path/to/output/dir`.
+Output data will be in `tmp/data/`.
 
 
 ## FAQ
@@ -153,7 +142,7 @@ Q: How to I stop propeR printing to the R console:
 
 Q: I found a bug!
 
->A: Please use the [GitHub issues](https://github.com/datasciencecampus/proper/issues) form to provide us with the information.
+>A: Please use the GitHub issues form to provide us with the information ([here](https://github.com/datasciencecampus/proper/issues))
 
 ### Common errors
 
@@ -165,7 +154,7 @@ Error in curl::curl_fetch_memory(url, handle = handle) :
 Called from: curl::curl_fetch_memory(url, handle = handle)
 ```
 
-> A: The OTP server has not been initiated. Please see [graphite](https://github.com/datasciencecampus/graphite) of this guide.
+> A: The OTP server has not been initiated. Please see [graphtie](https://github.com/datasciencecampus/graphite) of this guide.
 
 Q: Why am I receiving the following error when running propeR?
 
@@ -173,7 +162,7 @@ Q: Why am I receiving the following error when running propeR?
 Error in paste0(otpcon, "/plan") : object 'otpcon' not found
 ```
 
-> A: The OTP connection has not been established. Please see [graphite](https://github.com/datasciencecampus/graphite) of this guide.
+> A: The OTP connection has not been established. Please see [graphtie](https://github.com/datasciencecampus/graphite) of this guide.
 
 ## Acknowledgments
 
@@ -181,14 +170,7 @@ Error in paste0(otpcon, "/plan") : object 'otpcon' not found
 * [transxchange2gtfs](https://github.com/planarnetwork/transxchange2gtfs)
 * [dtd2mysql](https://github.com/open-track/dtd2mysql)
 * [OpenTripPlanner](http://www.opentripplanner.org/)
-* functions `otpConnect()`, `otpTripTime()`, `otpTripDistance()`, `otpIsochrone()` are modified from Marcus Young's repo [here](https://github.com/marcusyoung/opentripplanner/blob/master/Rscripts/otp-api-fn.R). Permission to use Marcus Young's code can be found here: https://github.com/marcusyoung/opentripplanner/pull/15
-
-## Authors / Contributors
-
-#### Data Science Campus - Office for National Statistics
-* [Michael Hodge](https://github.com/mshodge)
-* [Phillip Stubbings](https://github.com/phil8192)
-* [Ioannis Tsalamanis](https://github.com/IoannisTsalamanis)
+* functions `otpConnect()`, `otpTripTime()`, `otpTripDistance()`, `otpIsochrone()` are modified from Marcus Young's repo [here](https://github.com/marcusyoung/opentripplanner/blob/master/Rscripts/otp-api-fn.R)
 
 ## Contributions and Bug Reports
 

@@ -1,1 +1,0 @@
-Note: this GTFS may not contain the most recent timetables, it is only designed as a practice set of GTFS data for use with the propeR tool. Some (but not most) services have end dates of 2018-08-15, 2018-09-02, 2018-10-31. Therefore, anlysing journeys after these dates will not include these services. Most services have an end date capped at 2020-01-01.
