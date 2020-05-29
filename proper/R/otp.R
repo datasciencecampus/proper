@@ -6,33 +6,29 @@
 ##'
 ##' Connects to the OpenTripPlanner (OTP) server URL
 ##'
-##' @param hostname defaults to 'localhost'
+##' @param hostname defaults to 'localhost:8080'
 ##' @param router defaults to 'default'
-##' @param port defaults to 8080
 ##' @param ssl defaults to FALSE
 ##' @return The OTP server URL as https://hostname:port/otp/routers/router or http://hostname:port/otp/routers/router
 ##' @author Michael Hodge
 ##' @examples
 ##' @donotrun{
 ##'   otpcon <- otpConnect(
-##'     hostname = "localhost",
+##'     hostname = "localhost:8080",
 ##'     router = "default",
-##'     port = "8080",
 ##'     ssl = "false"
 ##'   )
 ##' }
 ##' @export
 otpConnect <-
-  function(hostname = 'localhost',
+  function(hostname = 'localhost:8080',
            router = 'default',
            p = TRUE,
-           port = '8080',
            ssl = FALSE)  {
     return (paste0(
       ifelse(ssl, "https://", "http://"),
       hostname,
-      ifelse(p, paste0(":",port,'/'),'/'),
-      "otp/routers/",
+      "/otp/routers/",
       router
     ))
   }
