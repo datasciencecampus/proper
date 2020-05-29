@@ -35,7 +35,7 @@ subsections:
 otpcon <- otpConnect()
 ```
 
-This function establishes the connection to the OTP server. You will need to specify these in the parameter fields (i.e. `hostname`, `router`, `port`). See **`?otpConnect`** for more information.
+This function establishes the connection to the OTP server. You will need to specify these in the parameter fields (i.e. `hostname`, `router`). See **`?otpConnect`** for more information.
 
 <a id="importdata"> </a>
 
@@ -88,7 +88,7 @@ pointToPoint(output.dir = 'PATH/TO/DIR',
               originPointsRow = 2,
               destinationPoints = destinationPoints,
               destinationPointsRow = 2,
-              startDateAndTime = '2018-08-18 12:00:00',
+              startDateAndTime = '2019-08-18 12:00:00',
               modes = 'WALK, TRANSIT',
               mapOutput = F)
 ```
@@ -125,7 +125,7 @@ pointToPointLoop(output.dir = 'PATH/TO/DIR',
               originPoints = originPoints,
               destinationPoints = destinationPoints,
               journeyLoop = 0,
-              startDateAndTime = '2018-08-18 12:00:00',
+              startDateAndTime = '2019-08-18 12:00:00',
               modes = 'WALK, TRANSIT')
 ```
 
@@ -144,7 +144,7 @@ pointToPointNearest(output.dir = 'PATH/TO/DIR',
               originPoints = originPoints,
               destinationPoints = destinationPoints,
               journeyReturn = F,
-              startDateAndTime = '2018-08-18 12:00:00',
+              startDateAndTime = '2019-08-18 12:00:00',
               modes = 'WALK, TRANSIT',
               nearestNum = 1,)
 ```
@@ -165,8 +165,8 @@ pointToPointTime(output.dir = 'PATH/TO/DIR',
               originPointsRow = 2,
               destinationPoints = destinationPoints,
               destinationPointsRow = 2,
-              startDateAndTime = '2018-08-18 12:00:00',
-              endDateAndTime = '2018-08-18 13:00:00',
+              startDateAndTime = '2019-08-18 12:00:00',
+              endDateAndTime = '2019-08-18 13:00:00',
               timeIncrease = 20,
               modes = 'WALK, TRANSIT',
               mapOutput = F)
@@ -191,7 +191,7 @@ isochrone(output.dir = 'PATH/TO/DIR',
               originPoints = originPoints,
               originPointsRow = 2,
               destinationPoints = destinationPoints,
-              startDateAndTime  = '2018-08-18 12:00:00',
+              startDateAndTime  = '2019-08-18 12:00:00',
               modes = 'WALK, TRANSIT',
               isochroneCutOffMax = 90,
               isochroneCutOffMin = 30,
@@ -221,8 +221,8 @@ isochroneTime(output.dir = 'PATH/TO/DIR',
               originPoints = originPoints,
               originPointsRow = 2,
               destinationPoints = destinationPoints,
-              startDateAndTime = '2018-08-18 12:00:00',
-              endDateAndTime = '2018-08-18 13:00:00',
+              startDateAndTime = '2019-08-18 12:00:00',
+              endDateAndTime = '2019-08-18 13:00:00',
               timeIncrease = 20,
               isochroneCutOffMax = 90,
               isochroneCutOffMin = 30,
@@ -249,7 +249,7 @@ isochroneMulti(output.dir = 'PATH/TO/DIR',
               otpcon = otpcon,
               originPoints = originPoints,
               destinationPoints = destinationPoints,
-              startDateAndTime  = '2018-08-18 12:00:00',
+              startDateAndTime  = '2019-08-18 12:00:00',
               modes = 'WALK, TRANSIT',
               isochroneCutOffMax = 90,
               isochroneCutOffMin = 30,
