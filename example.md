@@ -39,7 +39,7 @@ library(propeR)
 otpcon <- otpConnect()
 ```
 
-This function establishes the connection to the OTP server. You will need to specify these in the parameter fields (i.e. `hostname`, `router`, `port`). See **`?otpConnect`** for more information.
+This function establishes the connection to the OTP server. You will need to specify these in the parameter fields (i.e. `hostname`, `router`). See **`?otpConnect`** for more information.
 
 #### importLocationData and importGeojsonData
 
